@@ -1,0 +1,107 @@
+{
+  "version": 2,
+  "projects": {
+    "basics": {
+      "root": "apps/basics",
+      "sourceRoot": "apps/basics",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/next:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "root": "apps/basics",
+            "outputPath": "dist/apps/basics"
+          },
+          "configurations": {
+            "production": {}
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/next:server",
+          "options": {
+            "buildTarget": "basics:build",
+            "dev": true
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "basics:build:production",
+              "dev": false
+            }
+          }
+        },
+        "export": {
+          "executor": "@nrwl/next:export",
+          "options": {
+            "buildTarget": "basics:build:production"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/basics/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/basics"
+          ],
+          "options": {
+            "jestConfig": "apps/basics/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "basics-e2e": {
+      "root": "apps/basics-e2e",
+      "sourceRoot": "apps/basics-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/basics-e2e/cypress.json",
+            "tsConfig": "apps/basics-e2e/tsconfig.e2e.json",
+            "devServerTarget": "basics:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "basics:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/basics-e2e/**/*.{js,ts}"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/next"
+  },
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "babel": true
+      }
+    },
+    "@nrwl/next": {
+      "application": {
+        "style": "scss",
+        "linter": "eslint"
+      }
+    }
+  },
+  "defaultProject": "basics"
+}
