@@ -1,3 +1,4 @@
+import { __values } from 'tslib';
 import { storage } from '../lib/storage';
 
 export const saveUsername = (username) => {
@@ -5,5 +6,5 @@ export const saveUsername = (username) => {
 };
 
 export const getUserName = () => {
-  storage.save({ key: 'username' });
+  return storage.get({ key: 'username' });
 };
